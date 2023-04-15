@@ -1,5 +1,6 @@
 package com.ldiolaiuti.telegram.api.bot.controllers;
 
+import com.ldiolaiuti.telegram.api.bot.models.dtos.LoginRequest;
 import com.ldiolaiuti.telegram.api.bot.models.dtos.NewUserDTO;
 import com.ldiolaiuti.telegram.api.bot.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,6 +36,16 @@ public class AuthController {
         try {
             authService.signup(newUserDTO);
             return new ResponseEntity<>("User successfully created.", HttpStatus.OK);
+        } catch (ConstraintViolationException | IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/signin")
+    @Operation(summary = "Signin as an existing user")
+    public ResponseEntity<Object> signin(@RequestBody LoginRequest loginRequest) {
+        try {
+            return new ResponseEntity<>(authService.signin(loginRequest), HttpStatus.OK);
         } catch (ConstraintViolationException | IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
