@@ -21,6 +21,7 @@
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
         <helper.version>3.1.0</helper.version>
         <failsafe.version>2.22.2</failsafe.version>
+        <json.web.token.version>0.11.1</json.web.token.version>
     </properties>
 
     <dependencies>
@@ -67,6 +68,23 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${json.web.token.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${json.web.token.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${json.web.token.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- TEST DEPENDENCIES -->
