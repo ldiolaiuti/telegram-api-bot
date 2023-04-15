@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintViolationException;
 
@@ -31,9 +32,10 @@ public class TelegramController {
     @PostMapping("/send_message")
     @Operation(summary = "Send a message to a Telegram bot")
     public ResponseEntity<String> sendMessage(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
-                                              @RequestHeader HttpHeaders headers) {
+                                              @RequestPart MultipartFile image,
+                                              @RequestPart String text) {
         try {
-            telegramService.sendMessage(token);
+            telegramService.sendMessage(token, image, text);
             return new ResponseEntity<>("Message successfully sent", HttpStatus.OK);
         } catch (InvalidTokenException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);

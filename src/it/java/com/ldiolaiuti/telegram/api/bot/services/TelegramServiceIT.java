@@ -14,7 +14,7 @@ class TelegramServiceIT {
 
     @Test
     void shouldSendMessage() {
-        telegramService.sendMessage("token");
+        telegramService.sendMessage("token", null, "message");
     }
 
 }

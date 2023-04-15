@@ -7,6 +7,7 @@ import com.ldiolaiuti.telegram.api.bot.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Slf4j
@@ -22,7 +23,7 @@ public class TelegramService {
         this.telegramRepository = telegramRepository;
     }
 
-    public void sendMessage(String token) {
+    public void sendMessage(String token, MultipartFile image, String text) {
         if (!JwtUtils.isValid(token.replace("Bearer ", ""))) {
             throw new InvalidTokenException("Provided token is not valid");
         }
@@ -30,8 +31,10 @@ public class TelegramService {
         String s = telegramRepository.sendMessage(
                 TelegramParams.builder()
                         .chat_id(chatId)
-                        .text("Test message")
-                        .build());
+                        .caption(text)
+                        .parse_mode("markdown")
+                        .build(),
+                image);
         log.info("Sent message: " + s);
     }
 }

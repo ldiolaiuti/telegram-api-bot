@@ -13,5 +13,7 @@ public class TelegramParams {
 
     private String chat_id;
 
-    private String text;
+    private String caption;
+
+    private String parse_mode;
 }
