@@ -35,4 +35,22 @@ class UserRepositoryIT {
         assertThat(exists).isFalse();
     }
 
+    @Test
+    void shouldExistsByUsernameAndPassword() {
+        boolean exists = userRepository.existsByUsernameAndPassword("TestUser", "T3stP@ass");
+        assertThat(exists).isTrue();
+    }
+
+    @Test
+    void shouldNotExistsByUsernameAndPasswordDueToUsernameDoesNotMatch() {
+        boolean exists = userRepository.existsByUsernameAndPassword("InvalidUser", "T3stP@ass");
+        assertThat(exists).isFalse();
+    }
+
+    @Test
+    void shouldNotExistsByUsernameAndPasswordDueToPasswordDoesNotMatch() {
+        boolean exists = userRepository.existsByUsernameAndPassword("TestUser", "InvalidPass");
+        assertThat(exists).isFalse();
+    }
+
 }
