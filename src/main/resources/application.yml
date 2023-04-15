@@ -3,11 +3,11 @@ spring:
     name: @project.artifactId@
 
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:mydb
     username: sa
     password: password
+    driverClassName: org.h2.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     generate-ddl: true
     show-sql: true
