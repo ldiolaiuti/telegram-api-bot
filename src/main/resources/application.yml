@@ -11,3 +11,16 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     generate-ddl: true
     show-sql: true
+
+feign:
+  httpclient:
+    disable-ssl-validation: true
+
+telegram:
+  api:
+    url: https://api.telegram.org
+  bot:
+    token: 6005519215:AAG9frXRs4O15AE-8HglpuUqwbL-8T7FOd4
+    username: test_ldiolaiuti_bot
+    chatId: 237896500
+    url: ${telegram.api.url}/bot${telegram.bot.token}
