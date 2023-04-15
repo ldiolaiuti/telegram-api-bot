@@ -52,7 +52,7 @@ public class JwtUtils {
      * @param jwt - String format
      * @return List of claims
      */
-    Jws<Claims> parseToken(String jwt) {
+    public Jws<Claims> parseToken(String jwt) {
         return Jwts.parserBuilder()
                 .setSigningKey(hmacKey)
                 .build()

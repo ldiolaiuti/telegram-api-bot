@@ -3,8 +3,11 @@ package com.ldiolaiuti.telegram.api.bot.services;
 import com.google.common.base.Preconditions;
 import com.ldiolaiuti.telegram.api.bot.mappers.UserMapper;
 import com.ldiolaiuti.telegram.api.bot.models.User;
+import com.ldiolaiuti.telegram.api.bot.models.dtos.LoginRequest;
+import com.ldiolaiuti.telegram.api.bot.models.dtos.LoginResponse;
 import com.ldiolaiuti.telegram.api.bot.models.dtos.NewUserDTO;
 import com.ldiolaiuti.telegram.api.bot.repositories.UserRepository;
+import com.ldiolaiuti.telegram.api.bot.utils.JwtUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -49,6 +52,16 @@ public class AuthService {
         validateInput(dto);
 
         return userRepository.save(userMapper.toEntity(dto));
+    }
+
+    public LoginResponse signin(LoginRequest loginRequest) {
+        beanValidationService.validate(loginRequest);
+        Preconditions.checkArgument(userRepository.existsByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword()),
+                "Cannot login with provided credentials");
+
+        return LoginResponse.builder()
+                .token(JwtUtils.generateToken(loginRequest.getUsername()))
+                .build();
     }
 
     private void validateInput(NewUserDTO dto) {
