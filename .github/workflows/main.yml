@@ -6,9 +6,11 @@ name: Maven build pipeline
 on:
   push:
     branches:
-      - develop
-      - feature/**
       - master
+    pull_request:
+      branches:
+        - develop
+        - master
 
 jobs:
   build:
