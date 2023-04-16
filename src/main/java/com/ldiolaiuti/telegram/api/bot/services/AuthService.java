@@ -54,6 +54,11 @@ public class AuthService {
         return userRepository.save(userMapper.toEntity(dto));
     }
 
+    /**
+     * Signin request
+     * @param loginRequest
+     * @return JWT token that expires in 5 minutes
+     */
     public LoginResponse signin(LoginRequest loginRequest) {
         beanValidationService.validate(loginRequest);
         Preconditions.checkArgument(userRepository.existsByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword()),

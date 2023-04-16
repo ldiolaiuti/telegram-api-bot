@@ -1,9 +1,6 @@
 package com.ldiolaiuti.telegram.api.bot.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,6 +54,18 @@ public class JwtUtils {
                 .setSigningKey(hmacKey)
                 .build()
                 .parseClaimsJws(jwt);
+    }
+
+    /**
+     * Validate a given JWT
+     */
+    public boolean isValid(String jwt) {
+        try {
+            parseToken(jwt);
+            return true;
+        } catch (JwtException e) {
+            return false;
+        }
     }
 
 }
