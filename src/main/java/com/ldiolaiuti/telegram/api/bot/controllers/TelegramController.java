@@ -1,6 +1,7 @@
 package com.ldiolaiuti.telegram.api.bot.controllers;
 
 import com.ldiolaiuti.telegram.api.bot.exceptions.InvalidTokenException;
+import com.ldiolaiuti.telegram.api.bot.exceptions.TelegramException;
 import com.ldiolaiuti.telegram.api.bot.models.dtos.NewUserDTO;
 import com.ldiolaiuti.telegram.api.bot.services.TelegramService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +21,7 @@ import javax.validation.ConstraintViolationException;
         produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @Tag(name = "Telegram API",
-        description = "Provides all to comunicate with a Telegram bot")
+        description = "Provides all to communicate with a Telegram bot")
 public class TelegramController {
 
     private final TelegramService telegramService;
@@ -39,8 +40,8 @@ public class TelegramController {
             return new ResponseEntity<>("Message successfully sent", HttpStatus.OK);
         } catch (InvalidTokenException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (TelegramException e) {
+            return new ResponseEntity<>("An error occured while contacting Telegram.", HttpStatus.BAD_REQUEST);
         }
     }
 }
