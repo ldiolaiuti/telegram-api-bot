@@ -30,12 +30,21 @@ public class TelegramService {
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     * Send an message containing an image and text to a Telegram bot
+     * @param token Access token
+     * @param image Image file to be sent
+     * @param text Text message to be sent
+     */
     public void sendMessage(String token, MultipartFile image, String text) {
         if (!JwtUtils.isValid(token.replace("Bearer ", ""))) {
+            log.error("Provided token is not valid");
             throw new InvalidTokenException("Provided token is not valid");
         }
 
         try {
+            log.info("Sending message to telegram bot");
+
             String response = telegramRepository.sendMessage(
                     TelegramParams.builder()
                             .chat_id(chatId)
@@ -48,6 +57,8 @@ public class TelegramService {
                 log.error("An error occured: " + response);
                 throw new TelegramException(response);
             }
+
+            log.info("Message sent!");
         } catch (FeignException | JsonProcessingException e) {
             log.error("An error occured: " + e.getMessage());
             throw new TelegramException(e.getMessage());
