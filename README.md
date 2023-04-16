@@ -34,5 +34,6 @@ Exposed REST APIs are:
   A Github Actions workflow to build and test the project has been created.
   
   A screenshot of a sent message is attached below:
-  
+* 
+  ![](src/test/resources/message-sent.jpg)
   
