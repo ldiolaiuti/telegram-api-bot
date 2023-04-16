@@ -8,6 +8,7 @@ import com.ldiolaiuti.telegram.api.bot.models.dtos.LoginResponse;
 import com.ldiolaiuti.telegram.api.bot.models.dtos.NewUserDTO;
 import com.ldiolaiuti.telegram.api.bot.repositories.UserRepository;
 import com.ldiolaiuti.telegram.api.bot.utils.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
  * Class to provide Authorization signup and signin services
  */
 @Service
+@Slf4j
 public class AuthService {
 
     private final static String PASSWORD_REGEX =
@@ -51,6 +53,8 @@ public class AuthService {
     public User signup(NewUserDTO dto) {
         validateInput(dto);
 
+        log.info("Creating new user " + dto.getUsername());
+
         return userRepository.save(userMapper.toEntity(dto));
     }
 
@@ -63,6 +67,8 @@ public class AuthService {
         beanValidationService.validate(loginRequest);
         Preconditions.checkArgument(userRepository.existsByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword()),
                 "Cannot login with provided credentials");
+
+        log.info("Signin in user " + loginRequest.getUsername());
 
         return LoginResponse.builder()
                 .token(JwtUtils.generateToken(loginRequest.getUsername()))
